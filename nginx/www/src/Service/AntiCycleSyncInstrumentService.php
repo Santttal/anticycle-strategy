@@ -29,7 +29,7 @@ class AntiCycleSyncInstrumentService
 
     public function sync()
     {
-        $synced = [];
+        $synced = array_fill_keys(InstrumentEnum::getValues(), []);
         $urls = [];
         $dbInstrumentValues = [];
 
@@ -58,7 +58,7 @@ class AntiCycleSyncInstrumentService
                 $dateFromFile = $itemData[0];
                 $valueFromFile = $itemData[1];
 
-                if (in_array($dateFromFile, $synced, true)) {
+                if (in_array($dateFromFile, $synced[$instrumentName], true)) {
                     continue;
                 }
 
@@ -74,7 +74,7 @@ class AntiCycleSyncInstrumentService
                     $valueFromFile
                 );
                 $this->repository->add($instrumentValue);
-                $synced[] = $dateFromFile;
+                $synced[$instrumentName][] = $dateFromFile;
 
                 if ($counter === self::CHUNK_SIZE) {
                     $this->repository->save();
