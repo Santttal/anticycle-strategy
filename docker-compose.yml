@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+    nginx:
+        image: nginx:latest
+        container_name: nginx
+        ports:
+            - '8000:80'
+            - "443:443"
+        volumes:
+            - ./nginx/core:/etc/nginx/conf.d
+            - ./nginx/www:/var/www/
+            - ./nginx/logs:/var/log/nginx/
+            - ./nginx/html:/usr/share/nginx/html/
+        links:
+            - php
+            - mysql
+    mysql:
+        image: mysql:latest
+        ports:
+            - '33306:3306'
+        container_name: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=mypassword
+            - MYSQL_DATABASE=analytics
+            - MYSQL_USER=root1
+            - MYSQL_PASSWORD=toor
+        volumes:
+            - ./mysql-data:/var/lib/mysql
+    php:
+        build: ./php
+        container_name: php
+        volumes:
+            - ./nginx/www:/var/www
+        links:
+            - mysql
+    multithread-loader:
+        build: ./multithread-loader
+        ports:
+            - '8085:80'
+        container_name: multithread-loader
