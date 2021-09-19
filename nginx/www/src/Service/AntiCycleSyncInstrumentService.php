@@ -52,7 +52,6 @@ class AntiCycleSyncInstrumentService
         foreach ($items as $item) {
             $fileContext = $this->extractReportData($item['data']);
             $instrumentName = $flippedUrls[$item['url']];
-            var_export($instrumentName);
             $counter = 0;
             foreach ($fileContext as $itemData) {
                 $dateFromFile = $itemData[0];
