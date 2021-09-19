@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\InstrumentHistory;
 use App\Service\AntiCycleInstrumentService;
 use App\Service\AntiCycleSyncInstrumentService;
 use InstrumentEnum;
