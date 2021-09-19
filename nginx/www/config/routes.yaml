@@ -1,0 +1,7 @@
+anticycle:
+    path: /
+    controller: App\Controller\AntiCycleStrategyController::index
+
+anticycle_sync:
+    path: /anticycle/sync
+    controller: App\Controller\AntiCycleStrategyController::sync
