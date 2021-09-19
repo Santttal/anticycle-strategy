@@ -1,0 +1,90 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^8.0",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "composer/package-versions-deprecated": "1.11.99.4",
+        "doctrine/doctrine-bundle": "^2",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "doctrine/doctrine-migrations-bundle": "^2",
+        "doctrine/orm": "^2",
+        "guzzlehttp/guzzle": "^7.3",
+        "mockery/mockery": "^1.0",
+        "nesbot/carbon": "^2.48",
+        "php-mock/php-mock": "^2.0",
+        "phpunit/phpunit": "^9",
+        "sensio/framework-extra-bundle": "^5.5",
+        "symfony/console": "5.3.*",
+        "symfony/dotenv": "5.3.*",
+        "symfony/flex": "^1.14",
+        "symfony/framework-bundle": "5.3.*",
+        "symfony/monolog-bundle": "^3.5",
+        "symfony/phpunit-bridge": "^4",
+        "symfony/twig-bundle": "5.3.*",
+        "symfony/yaml": "5.3.*"
+    },
+    "require-dev": {
+        "symfony/browser-kit": "5.3.*",
+        "symfony/css-selector": "5.3.*"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "app.preparation.test": [
+            "php bin/console doctrine:database:drop --if-exists --force --env=test",
+            "php bin/console doctrine:database:create -q --env=test",
+            "php bin/console doctrine:migrations:migrate --no-interaction --env=test"
+        ],
+        "test": [
+            "@ci-tests"
+        ],
+        "ci-tests": [
+            "@app.preparation.test",
+            "php -d pcov.enabled=1 vendor/bin/phpunit --testsuite=full --log-junit tests/logs/all.xml --fail-on-warning --coverage-clover tests/logs/coverage.xml --coverage-text --colors=never"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.3.*"
+        }
+    }
+}
