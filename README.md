@@ -25,3 +25,8 @@ $ docker-compose exec bin/console instruments:sync
 - Mysql
 - Nginx + php-fpm
 - Symfony 5.3, Doctrine
+
+## Upcoming
+- Redis
+- tests
+- gRPC
