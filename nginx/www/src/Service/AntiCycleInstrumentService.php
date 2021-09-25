@@ -38,7 +38,7 @@ class AntiCycleInstrumentService
     /**
      * @return int[]
      */
-    public function getValues(string $instrumentName, int $limit, string $interval): array
+    public function getValues(string $instrumentName, int $limit, string $avgInterval): array
     {
         $lastValue = $this->repository->findLast($instrumentName);
         $selectedDate = Carbon::make($lastValue->getDate());
@@ -53,7 +53,7 @@ class AntiCycleInstrumentService
                 }
             }
 
-            $averageValue = $this->repository->calculateAvg($instrumentName, $selectedDate, $interval);
+            $averageValue = $this->repository->calculateAvg($instrumentName, $selectedDate, $avgInterval);
             $value = $this->round($instrumentValue->getValue());
 
             $values[] = [
