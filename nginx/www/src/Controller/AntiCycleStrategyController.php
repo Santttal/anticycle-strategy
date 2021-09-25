@@ -43,6 +43,6 @@ class AntiCycleStrategyController extends AbstractController
     {
         $syncService->sync();
 
-        return $this->redirect('/anticycle');
+        return $this->redirect('/');
     }
 }

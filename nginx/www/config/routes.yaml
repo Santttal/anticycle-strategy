@@ -3,5 +3,5 @@ anticycle:
     controller: App\Controller\AntiCycleStrategyController::index
 
 anticycle_sync:
-    path: /anticycle/sync
+    path: /sync
     controller: App\Controller\AntiCycleStrategyController::sync

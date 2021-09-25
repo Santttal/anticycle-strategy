@@ -83,24 +83,6 @@ class AntiCycleSyncInstrumentService
 
             $this->repository->save();
         }
-
-
-        die;
-
-//        echo "start sync $instrumentName {$startAt->format('Y-m-d')} - {$endAt->format('Y-m-d')}" . PHP_EOL;
-
-        if ($startAt->format('Y-m-d') >= Carbon::today()->format('Y-m-d')) {
-            return;
-        }
-        if ($startAt->format('Y-m-d') === $endAt->format('Y-m-d')) {
-            return;
-        }
-
-        $fileContext = $this->getFileData(sprintf(
-            self::URLS[$instrumentName],
-            $startAt->format('Y-m-d'),
-            $endAt->format('Y-m-d')
-        ));
     }
 
     private function extractReportData(string $rawData): array
