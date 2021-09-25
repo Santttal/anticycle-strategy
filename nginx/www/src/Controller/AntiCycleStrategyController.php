@@ -33,8 +33,6 @@ class AntiCycleStrategyController extends AbstractController
                     'averages' => $antiCycleService->getValues(InstrumentEnum::T10Y2Y, $limit, '-10 years'),
                     'current' => $antiCycleService->getLastValue(InstrumentEnum::T10Y2Y),
                 ],
-                'categories' => [],
-                'instruments' => [],
             ]
         );
     }
