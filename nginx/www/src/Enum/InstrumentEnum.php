@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Enum;
+
 class InstrumentEnum
 {
     public const SP_500 = 'sp500';
