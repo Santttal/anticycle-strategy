@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Repository\InstrumentHistoryRepository;
 use Carbon\Carbon;
 
-class AntiCycleInstrumentService
+class InstrumentService
 {
     public function __construct(
         private InstrumentHistoryRepository $repository,

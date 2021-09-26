@@ -2,16 +2,22 @@
 
 namespace App\Controller;
 
-use App\Service\AntiCycleInstrumentService;
-use App\Service\AntiCycleSyncInstrumentService;
+use App\Service\InstrumentService;
+use App\Service\SyncDecisionMaker;
+use App\Service\SyncInstrumentService;
 use InstrumentEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AntiCycleStrategyController extends AbstractController
 {
-    public function index(AntiCycleInstrumentService $antiCycleService)
+    public function index(InstrumentService $antiCycleService, SyncInstrumentService $syncService, SyncDecisionMaker $decisionMaker)
     {
         $limit = 30;
+
+        if ($decisionMaker->shouldSync()) {
+            $syncService->sync();
+            $decisionMaker->markAsSynced();
+        }
 
         return $this->render(
             'anticycle.html.twig',
@@ -35,12 +41,5 @@ class AntiCycleStrategyController extends AbstractController
                 ],
             ]
         );
-    }
-
-    public function sync(AntiCycleSyncInstrumentService $syncService)
-    {
-        $syncService->sync();
-
-        return $this->redirect('/');
     }
 }
