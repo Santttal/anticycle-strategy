@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Enum\InstrumentEnum;
 use App\Service\InstrumentService;
 use App\Service\SyncDecisionMaker;
 use App\Service\SyncInstrumentService;
-use InstrumentEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AntiCycleStrategyController extends AbstractController
