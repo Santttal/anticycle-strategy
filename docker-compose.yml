@@ -13,6 +13,7 @@ services:
             - ./nginx/html:/usr/share/nginx/html/
         links:
             - php
+            - redis
             - mysql
     mysql:
         image: mysql:latest
@@ -33,8 +34,14 @@ services:
             - ./nginx/www:/var/www
         links:
             - mysql
+            - redis
     multithread-loader:
         build: ./multithread-loader
         ports:
             - '8085:80'
         container_name: multithread-loader
+    redis:
+        image: redis:alpine
+        ports:
+            - "16379:6379"
+        container_name: redis
