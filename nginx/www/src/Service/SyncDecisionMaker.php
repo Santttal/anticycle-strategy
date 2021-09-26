@@ -16,8 +16,6 @@ class SyncDecisionMaker
 
     public function shouldSync(): bool
     {
-        var_export($this->redis->ttl(self::SYNC_KEY));
-
         return !$this->redis->exists(self::SYNC_KEY);
     }
 
