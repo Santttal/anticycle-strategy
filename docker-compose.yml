@@ -1,4 +1,9 @@
 version: '3.3'
+
+volumes:
+    mysql:
+        driver: local
+
 services:
     nginx:
         image: nginx:latest
@@ -16,17 +21,12 @@ services:
             - redis
             - mysql
     mysql:
-        image: mysql:latest
-        ports:
-            - '33306:3306'
-        container_name: mysql
-        environment:
-            - MYSQL_ROOT_PASSWORD=mypassword
-            - MYSQL_DATABASE=analytics
-            - MYSQL_USER=root1
-            - MYSQL_PASSWORD=toor
+        image: mysql:8.0
+        restart: "always"
         volumes:
-            - ./mysql-data:/var/lib/mysql
+            - mysql:/var/lib/mysql
+        ports:
+            - "33306:3306"
     php:
         build: ./php
         container_name: php
