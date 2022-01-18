@@ -53,7 +53,7 @@ class InstrumentHistoryRepository extends AbstractRepository
     /**
      * @return InstrumentHistory[]
      */
-    public function findAllInInterval(string $name, DateTimeInterface $startAt,  DateTimeInterface $endAt): array
+    public function findAllInInterval(string $name, DateTimeInterface $startAt, DateTimeInterface $endAt): array
     {
         $qb = $this->createQueryBuilder('sp');
 

@@ -23,5 +23,4 @@ class SyncInstrumentsCommand extends Command
 
         return Command::SUCCESS;
     }
-
 }

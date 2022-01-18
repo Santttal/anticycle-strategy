@@ -11,7 +11,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    protected function configureContainer(ContainerConfigurator $container
+    protected function configureContainer(
+        ContainerConfigurator $container
     ): void {
         $container->import('../config/{packages}/*.yaml');
         $container->import('../config/{packages}/' . $this->environment . '/*.yaml');
@@ -35,5 +36,4 @@ class Kernel extends BaseKernel
             $routes->import('../config/{routes}.php');
         }
     }
-
 }

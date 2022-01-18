@@ -26,7 +26,7 @@ class InstrumentService
 
         $baseDiff = $today->diffInDays($lastDate);
         if ($today->isSaturday()) {
-            $baseDiff--;
+            --$baseDiff;
         }
         if ($today->isSunday()) {
             $baseDiff -= 2;
@@ -44,12 +44,12 @@ class InstrumentService
         $selectedDate = Carbon::make($lastValue->getDate());
         $values = [];
 
-        for ($i = 0; $i < $limit; $i++) {
+        for ($i = 0; $i < $limit; ++$i) {
             $instrumentValue = null;
             while (null === $instrumentValue) {
                 $instrumentValue = $this->repository->findByDate($instrumentName, $selectedDate);
                 if (null === $instrumentValue) {
-                    $selectedDate->modify("-1 day");
+                    $selectedDate->modify('-1 day');
                 }
             }
 
@@ -62,7 +62,7 @@ class InstrumentService
                 'avg' => $this->round($averageValue),
             ];
 
-            $selectedDate->modify("-1 day");
+            $selectedDate->modify('-1 day');
         }
 
         return $values;

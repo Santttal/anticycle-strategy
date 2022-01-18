@@ -36,8 +36,11 @@ class SyncInstrumentService
         $flippedUrls = array_flip($urls);
 
         $client = new Client();
-        $response = $client->request('POST', 'http://multithread-loader/download',
-            ['body' => json_encode(['urls' => array_values($urls)])]);
+        $response = $client->request(
+            'POST',
+            'http://multithread-loader/download',
+            ['body' => json_encode(['urls' => array_values($urls)])]
+        );
 
         $items = json_decode($response->getBody(), true)['items'];
         foreach ($items as $item) {
@@ -56,7 +59,7 @@ class SyncInstrumentService
                     continue;
                 }
 
-                $counter++;
+                ++$counter;
 
                 $instrumentValue = new InstrumentHistory(
                     Carbon::make($dateFromFile),
@@ -66,7 +69,7 @@ class SyncInstrumentService
                 $this->repository->add($instrumentValue);
                 $synced[$instrumentName][] = $dateFromFile;
 
-                if ($counter === self::CHUNK_SIZE) {
+                if (self::CHUNK_SIZE === $counter) {
                     $this->repository->save();
                     $this->entityManager->clear();
                 }
@@ -82,9 +85,8 @@ class SyncInstrumentService
         $data = [];
         $prevValue = 0;
         foreach ($lines as $line) {
-
             $line = str_getcsv($line);
-            if (!array_key_exists(1, $line) || $line[1] === '.') {
+            if (!array_key_exists(1, $line) || '.' === $line[1]) {
                 $line[1] = $prevValue;
             }
             if (null !== $line[0]) {
@@ -116,8 +118,6 @@ class SyncInstrumentService
 
     private function existsInDb(array $dbInstrumentValues, string $dateFromFile): bool
     {
-        return count(array_filter($dbInstrumentValues, function (InstrumentHistory $instrument) use ($dateFromFile) {
-                return $instrument->getDate()->format('Y-m-d') === $dateFromFile;
-            })) > 0;
+        return count(array_filter($dbInstrumentValues, fn (InstrumentHistory $instrument) => $instrument->getDate()->format('Y-m-d') === $dateFromFile)) > 0;
     }
 }
