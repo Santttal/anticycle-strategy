@@ -21,7 +21,7 @@ $ docker-compose exec bin/console instruments:sync
 
 ## Used tools
 - Docker, docker-compose
-- Golang (load external data), PHP 8 (web UI)
+- Golang (load external data), PHP 8.1 (web UI)
 - Mysql (main storage)
 - Redis (store data sync interval) 
 - Nginx + php-fpm
