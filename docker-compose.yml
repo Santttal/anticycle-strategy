@@ -5,43 +5,32 @@ volumes:
         driver: local
 
 services:
-    nginx:
-        image: nginx:latest
-        container_name: nginx
-        ports:
-            - '8000:80'
-            - "443:443"
-        volumes:
-            - ./nginx/core:/etc/nginx/conf.d
-            - ./nginx/www:/var/www/
-            - ./nginx/logs:/var/log/nginx/
-            - ./nginx/html:/usr/share/nginx/html/
-        links:
-            - php
-            - redis
+    app:
+        build: ./app
+        depends_on:
             - mysql
+            - redis
+        restart: "no"
+        ports:
+            - "8081:80"
+            - "8043:443"
+        volumes:
+            - ./app:/app
     mysql:
         image: mysql:8.0
-        restart: "always"
+        restart: "no"
         volumes:
             - mysql:/var/lib/mysql
         ports:
             - "33306:3306"
-    php:
-        build: ./php
-        container_name: php
-        volumes:
-            - ./nginx/www:/var/www
-        links:
-            - mysql
-            - redis
+        environment:
+            MYSQL_ROOT_PASSWORD: 'analytics'
     multithread-loader:
         build: ./multithread-loader
         ports:
             - '8085:80'
-        container_name: multithread-loader
     redis:
         image: redis:alpine
         ports:
             - "16379:6379"
-        container_name: redis
+
