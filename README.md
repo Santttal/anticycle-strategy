@@ -25,7 +25,7 @@ $ docker-compose exec bin/console instruments:sync
 - Mysql (main storage)
 - Redis (store data sync interval) 
 - Nginx + php-fpm
-- Symfony 5.3, Doctrine
+- Symfony 6.0, Doctrine
 
 ## Upcoming
 - tests
