@@ -11,7 +11,7 @@ $ docker-compose exec php composer app.init
 
 ## Quick start
 
-Open main page http://localhost:8000/
+Open main page http://localhost:8081/
 
 to sync data manually run
 
